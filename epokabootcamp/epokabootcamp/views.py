@@ -1,19 +1,41 @@
 from django.shortcuts import render
 from django.http import HttpResponse
+from django.forms import ModelForm
 from .models import Student
 
 
-def hello_world(request):
-    registered_users = [
-        {"name": "Kristjan", "surname": "Pashollari"},
-        {"name": "Enes", "surname": "Bytyqi"},
-        {"name": "Igli", "surname": "Zeneli"},
-        {"name": "Admirim", "surname": "Kasolli"}
-    ]
+class StudentForm(ModelForm):
+    class Meta:
+        model = Student
+        fields = ["name", "surname", "school"]
+
+def hello_world(request, query_string=None):
+    newStudent = Student()
+    form = StudentForm(instance=newStudent)
+    students = Student.objects.all()
+    f = StudentForm(request.POST)
+    if f.is_valid():
+        newStudent = f.save()
     context = {
-        'registered_users': registered_users
+        'students': students,
+        'form': form,
+        'query_string': query_string
     }
     return render(request, "index.html", context)
 
-def second_function(request):
-    return HttpResponse("This is another function!")
+def show_student(request, student_id):
+    # student = Student.objects.filter(id=student_id)
+    student = Student.objects.get(id=student_id)
+    context = {
+        'student': student
+    }
+    return render(request, "studentProfile.html", context)
+
+
+def edit_student(request, student_id):
+    student = Student.objects.get(id=student_id)
+    form = StudentForm(instance=student)
+    context = {
+        'student': student
+    }
+    return render(request, "studentProfile.html", context)

@@ -19,8 +19,9 @@ from django.urls import path
 from . import views
 
 urlpatterns = [
-    path('third-page/', views.hello_world),
-    path('second-page/', views.second_function),
     path('welcome/', views.hello_world),
+    path('welcome/<str:query_string>', views.hello_world),
+    path('student-profile/<int:student_id>', views.show_student),
+    path('student-edit/<int:student_id>', views.edit_student),
     path('admin/', admin.site.urls),
 ]
