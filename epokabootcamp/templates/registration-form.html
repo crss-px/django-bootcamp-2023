@@ -1,0 +1,17 @@
+{% extends "base.html" %}
+
+{% block title %} Registration {% endblock %}
+
+{% block body %}
+{% if not studentSaved %}
+    <form method="post">
+        {% csrf_token %}
+        {{ form }}
+        <input type="submit" value="Submit">
+    </form>
+{% else %}
+    Student was store successfully in DB.
+    <a href="{% url 'registration_form' %}" class="button">New registration</a>
+{% endif %}
+
+{% endblock %}

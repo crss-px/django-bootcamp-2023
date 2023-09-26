@@ -1,0 +1,8 @@
+{% extends "base.html" %}
+
+{% block title %} Main Page {% endblock %}
+
+{% block body %}
+<a href="{% url 'registration_form' %}" class="button">Register here</a>
+<a href="{% url 'students-list' %}" class="button">Show me the list</a>
+{% endblock %}

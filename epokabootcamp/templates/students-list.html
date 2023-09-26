@@ -1,0 +1,15 @@
+{% extends 'base.html' %}
+{% block title %} List {% endblock %}
+{% block body %}
+<form method="get">
+    {{ filterForm }}
+    <input type="submit" value="Filter data">
+</form>
+
+{% if query_string %}
+	<p>showing list for: <b>{{ query_string }}</b></p>
+{% endif %}
+{% for student in students %}
+	<p>{{ student }}</p>
+{% endfor %}
+{% endblock %}

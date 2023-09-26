@@ -1,38 +1,47 @@
 from django.shortcuts import render
 from django.http import HttpResponse
-from django import forms
 from .models import Student
+from .forms import StudentForm, SchoolFilterForm
 
+def index(request):
+    context = {
 
-class StudentForm(forms.ModelForm):
-    class Meta:
-        model = Student
-        fields = ["name", "surname", "school"]
+    }
+    return render(request, 'main-page.html', context)
 
-class SchoolFilterForm(forms.Form):
-    school = forms.CharField(label="Filter by school name", max_length=255)
-
-def hello_world(request, query_string=None):
+def registration_form(request):
     newStudent = Student()
     form = StudentForm(instance=newStudent)
     students = Student.objects.all()
     f = StudentForm(request.POST)
+    studentSaved = False
     if f.is_valid():
         newStudent = f.save()
+        studentSaved = True
 
+    context = {
+        'form': form,
+        'studentSaved': studentSaved,
+    }
+    return render(request, 'registration-form.html', context)
+
+
+def students_list(request):
+    query_string_form = None
+    students = Student.objects.all()
     filterForm = SchoolFilterForm()
     filterFormSubmitted = SchoolFilterForm(request.GET)
     if filterFormSubmitted.is_valid():
         query_string_form = filterFormSubmitted.cleaned_data['school']
         students = Student.objects.filter(school=query_string_form)
-
+        if query_string_form is '':
+            students = Student.objects.all()
     context = {
         'students': students,
-        'form': form,
-        'query_string': query_string,
+        'query_string': query_string_form,
         'filterForm': filterForm
     }
-    return render(request, "index.html", context)
+    return render(request, "students-list.html", context)
 
 def show_student(request, student_id):
     # student = Student.objects.filter(id=student_id)
