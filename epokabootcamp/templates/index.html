@@ -1,7 +1,9 @@
+<!--{% load static %}-->
 <head>
 	<title>Home</title>
 </head>
 <body>
+<!--<img src="{% static 'logo.png' %}" alt="My image">-->
 <h1>Register here</h1>
 <form method="post">
     {% csrf_token %}
@@ -16,6 +18,12 @@
 <br>
 
 <h2>Something magic</h2>
+
+<form method="get">
+    {{ filterForm }}
+    <input type="submit" value="Filter data">
+</form>
+
 {% if query_string %}
 	<p>showing list for: <b>{{ query_string }}</b></p>
 {% endif %}

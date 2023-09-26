@@ -1,13 +1,16 @@
 from django.shortcuts import render
 from django.http import HttpResponse
-from django.forms import ModelForm
+from django import forms
 from .models import Student
 
 
-class StudentForm(ModelForm):
+class StudentForm(forms.ModelForm):
     class Meta:
         model = Student
         fields = ["name", "surname", "school"]
+
+class SchoolFilterForm(forms.Form):
+    school = forms.CharField(label="Filter by school name", max_length=255)
 
 def hello_world(request, query_string=None):
     newStudent = Student()
@@ -16,10 +19,18 @@ def hello_world(request, query_string=None):
     f = StudentForm(request.POST)
     if f.is_valid():
         newStudent = f.save()
+
+    filterForm = SchoolFilterForm()
+    filterFormSubmitted = SchoolFilterForm(request.GET)
+    if filterFormSubmitted.is_valid():
+        query_string_form = filterFormSubmitted.cleaned_data['school']
+        students = Student.objects.filter(school=query_string_form)
+
     context = {
         'students': students,
         'form': form,
-        'query_string': query_string
+        'query_string': query_string,
+        'filterForm': filterForm
     }
     return render(request, "index.html", context)
 
