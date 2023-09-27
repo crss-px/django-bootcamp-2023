@@ -13,10 +13,10 @@
   <a href="{% url 'main-page' %}" class="logo">
       <img width="100px" src="{% static 'logo.png' %}">
   </a>
+
   <div class="header-right">
-    <a class="active" href="#home">Home</a>
-    <a href="#contact">Contact</a>
-    <a href="#about">About</a>
+    <a class="{% if active_menu == 'students' %}active{% endif %}" href="{% url 'students-index' %}">Students</a>
+    <a class="{% if active_menu == 'courses' %}active{% endif %}" href="{% url 'courses-index' %}">Courses</a>
   </div>
 </div>
 {% endblock %}

@@ -9,6 +9,13 @@ def index(request):
     }
     return render(request, 'main-page.html', context)
 
+
+def students_index(request):
+    context = {
+        'active_menu': 'students'
+    }
+    return render(request, 'students/students-index.html', context)
+
 def registration_form(request):
     newStudent = Student()
     form = StudentForm(instance=newStudent)
@@ -22,8 +29,9 @@ def registration_form(request):
     context = {
         'form': form,
         'studentSaved': studentSaved,
+        'active_menu': 'students'
     }
-    return render(request, 'registration-form.html', context)
+    return render(request, 'students/registration-form.html', context)
 
 
 def students_list(request):
@@ -34,28 +42,39 @@ def students_list(request):
     if filterFormSubmitted.is_valid():
         query_string_form = filterFormSubmitted.cleaned_data['school']
         students = Student.objects.filter(school=query_string_form)
-        if query_string_form is '':
+        if query_string_form == '':
             students = Student.objects.all()
     context = {
         'students': students,
         'query_string': query_string_form,
-        'filterForm': filterForm
+        'filterForm': filterForm,
+        'active_menu': 'students'
     }
-    return render(request, "students-list.html", context)
+    return render(request, "students/students-list.html", context)
 
-def show_student(request, student_id):
-    # student = Student.objects.filter(id=student_id)
-    student = Student.objects.get(id=student_id)
+# def show_student(request, student_id):
+#     # student = Student.objects.filter(id=student_id)
+#     student = Student.objects.get(id=student_id)
+#     context = {
+#         'student': student
+#     }
+#     return render(request, "studentProfile.html", context)
+#
+#
+# def edit_student(request, student_id):
+#     student = Student.objects.get(id=student_id)
+#     form = StudentForm(instance=student)
+#     context = {
+#         'student': student
+#     }
+#     return render(request, "studentProfile.html", context)
+
+
+
+
+
+def courses_index(request):
     context = {
-        'student': student
+        'active_menu': 'courses'
     }
-    return render(request, "studentProfile.html", context)
-
-
-def edit_student(request, student_id):
-    student = Student.objects.get(id=student_id)
-    form = StudentForm(instance=student)
-    context = {
-        'student': student
-    }
-    return render(request, "studentProfile.html", context)
+    return render(request, 'courses/courses-index.html', context)

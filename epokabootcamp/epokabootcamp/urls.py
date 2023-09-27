@@ -20,9 +20,14 @@ from . import views
 
 urlpatterns = [
     path('', views.index, name="main-page"),
-    path('register/', views.registration_form, name="registration_form"),
-    path('students-list/', views.students_list, name="students-list"),
-    path('student-profile/<int:student_id>', views.show_student),
-    path('student-edit/<int:student_id>', views.edit_student),
+    path('students/', views.students_index, name="students-index"),
+    path('students/register/', views.registration_form, name="registration_form"),
+    path('students/students-list/', views.students_list, name="students-list"),
+
+    path('courses/', views.courses_index, name="courses-index"),
+
+
+    # path('student-profile/<int:student_id>', views.show_student),
+    # path('student-edit/<int:student_id>', views.edit_student),
     path('admin/', admin.site.urls),
 ]
