@@ -3,12 +3,32 @@
 {% load static %}
 <head>
     <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
 	<link rel="stylesheet" href="{% static 'custom.css' %}">
-    <title>{% block title %} INDEX {% endblock %}</title>
+    <title>{% block title %} Epoka {% endblock %}</title>
 </head>
 <body>
-<h1> Epoka University</h1>
-{% block body %} {% endblock %}
+{% block menu %}
+<div class="header">
+  <a href="{% url 'main-page' %}" class="logo">
+      <img width="100px" src="{% static 'logo.png' %}">
+  </a>
+  <div class="header-right">
+    <a class="active" href="#home">Home</a>
+    <a href="#contact">Contact</a>
+    <a href="#about">About</a>
+  </div>
+</div>
+{% endblock %}
 
+
+
+<div style="padding:20px 50px">
+{% block body %}
+  <h1>Responsive Header</h1>
+  <p>Resize the browser window to see the effect.</p>
+  <p>Some content..</p>
+{% endblock %}
+</div>
 </body>
 </html>
