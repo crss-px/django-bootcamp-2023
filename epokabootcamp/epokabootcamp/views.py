@@ -1,7 +1,7 @@
 from django.shortcuts import render
 from django.http import HttpResponse
-from .models import Student
-from .forms import StudentForm, SchoolFilterForm
+from .models import Student, Course
+from .forms import StudentForm, SchoolFilterForm, CourseForm
 
 def index(request):
     context = {
@@ -78,3 +78,36 @@ def courses_index(request):
         'active_menu': 'courses'
     }
     return render(request, 'courses/courses-index.html', context)
+
+
+def new_course(request):
+    newCourse = Course()
+    form = CourseForm(instance=newCourse)
+    submittedForm = CourseForm(request.POST)
+    courseSaved = False
+    if submittedForm.is_valid():
+        newCourse = submittedForm.save()
+        courseSaved = True
+
+    context = {
+        'form': form,
+        'courseSaved': courseSaved,
+        'active_menu': 'courses'
+    }
+    return render(request, 'courses/new-course.html', context)
+
+def course_list(request):
+    allCourses = Course.objects.all()
+    coursesDict = {}
+    for course in allCourses:
+        studentsInCourse = len(Student.objects.filter(course=course.id))
+        courseData = (course, studentsInCourse)
+        coursesDict[course.id] = courseData
+    print(coursesDict)
+    context = {
+        'courses' : allCourses,
+        'active_menu': 'courses',
+        'coursesWithData': coursesDict
+    }
+
+    return render(request, "courses/list.html", context)

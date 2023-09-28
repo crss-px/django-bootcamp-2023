@@ -1,0 +1,17 @@
+{% extends "base.html" %}
+
+{% block title %} Create Course {% endblock %}
+
+{% block body %}
+{% if not courseSaved %}
+    <form method="post">
+        {% csrf_token %}
+        {{ form.as_p }}
+        <input type="submit" value="Submit">
+    </form>
+{% else %}
+    Course was store successfully in DB.
+    <a href="{% url 'add_course' %}" class="button">New Course</a>
+{% endif %}
+
+{% endblock %}

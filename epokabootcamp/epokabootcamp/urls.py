@@ -22,9 +22,11 @@ urlpatterns = [
     path('', views.index, name="main-page"),
     path('students/', views.students_index, name="students-index"),
     path('students/register/', views.registration_form, name="registration_form"),
-    path('students/students-list/', views.students_list, name="students-list"),
+    path('students/list/', views.students_list, name="students-list"),
 
     path('courses/', views.courses_index, name="courses-index"),
+    path('courses/new/', views.new_course, name="add_course"),
+    path('courses/list/', views.course_list, name="course_list"),
 
 
     # path('student-profile/<int:student_id>', views.show_student),

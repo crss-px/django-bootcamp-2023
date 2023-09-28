@@ -1,0 +1,24 @@
+{% extends "base.html" %}
+
+{% block title %} Course list {% endblock %}
+
+{% block body %}
+<table id="allCourses">
+    <tr>
+        <th>Course name</th>
+        <th>Department</th>
+        <th>Credits</th>
+        <th>No. of Students</th>
+        <th>Active</th>
+    </tr>
+    {% for id, courseData in coursesWithData.items %}
+        <tr>
+            <td>{{courseData.0.name}}</td>
+            <td>{{courseData.0.department}}</td>
+            <td>{{courseData.0.credits}}</td>
+            <td>{{courseData.1}}</td>
+            <td>{{courseData.0.is_active}}</td>
+        </tr>
+    {% endfor %}
+</table>
+{% endblock %}

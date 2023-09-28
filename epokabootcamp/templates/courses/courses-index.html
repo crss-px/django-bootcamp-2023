@@ -3,6 +3,6 @@
 {% block title %} Main Page {% endblock %}
 
 {% block body %}
-<a href="#" class="button">New Course</a>
-<a href="#" class="button">Course list</a>
+<a href="{% url 'add_course' %}" class="button">New Course</a>
+<a href="{% url 'course_list' %}" class="button">Course list</a>
 {% endblock %}

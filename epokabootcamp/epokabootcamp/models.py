@@ -4,7 +4,7 @@ class Student(models.Model):
   name = models.CharField(max_length=255)
   surname = models.CharField(max_length=255)
   school = models.CharField(max_length=255)
-
+  course = models.ForeignKey("Course", on_delete=models.CASCADE, blank=True)
   def __str__(self):
     if self.school:
       return self.name + " " + self.surname + " (" + self.school + ")"
